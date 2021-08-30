@@ -6,15 +6,23 @@ function App() {
     const [result, setResult] = useState("0");
 
     const handleClick = (e) => {
-        setResult(result.concat(e.target.name));
+        if((result === "0" && e.target.name !== ".") || result === "Error") {
+            setResult(e.target.name);
+        }
+        else {
+            setResult(result.concat(e.target.name));
+        }
     }
 
     const clear = () => {
-        setResult("");
+        setResult("0");
     }
 
     const backspace = () => {
         setResult(result.slice(0, -1));
+        if (result.length === 1) {
+            setResult("0");
+        }
     }
 
     const calculate = () => {
@@ -30,7 +38,7 @@ function App() {
     return (
         <div className="container">
             <form>
-                <input type="text" value={result}/>
+                <input type="text" value={result} readOnly={true}/>
             </form>
             <div className="keypad">
                 <button id="clear" className="highlight" onClick={clear}>Clear</button>
